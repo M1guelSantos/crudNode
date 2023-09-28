@@ -6,6 +6,9 @@ const connection = require("./database/database")
 const categoriesController = require("./categories/CategoriesController")
 const articlesController = require("./articles/ArticlesController")
 
+//Importando models
+const Article = require("./articles/Article");
+const Category = require("./categories/Category");
 
 //view engine = ejs
 app.set('view engine', 'ejs')
