@@ -22,6 +22,12 @@ router.post("/categories/save", (req,res)=>{
     }else{
         res.redirect("admin/categories/new") //caso seja invalido o nome redireciona
     }
-})
+})    
+
+    router.get("/admin/categories", (req,res)=>{
+        Category.findAll().then(categories =>{
+            res.render("admin/categories/index", {categoria: categories}) // Passando categorias para frontEnd. O nome da variável que sera levado pra view
+        })
+    })
 
 module.exports = router; 
