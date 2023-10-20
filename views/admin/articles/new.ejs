@@ -8,13 +8,21 @@
                     <h2>Novo Artigo</h2>
                 </div>
             <div class="card-body">
-                <form method="POST" action="/categories/save">
+                <form method="POST" action="/articles/save">
                     <input class="form-control" type="text" name="title" placeholder="defina o titulo do artigo">
                     <br/>
                     <textarea class="form-control" placeholder="Escreva o artigo aqui" name="body" id="article"></textarea>
+                    <label>Categoria</label> 
+                    <br/>
+                    <br/>
+                    <select name="category" class="form-control">
+                        <% categories.forEach((category) => { %>
+                            <option value="<%= category.id %>"> <%= category.title %></option>
+                        <% }) %>
+                    </select>
                     <br/>
                     <button class="btn btn-primary">Enviar</button>
-                </form>
+                </form> 
             </div>
             </div>
         </div>
@@ -27,9 +35,10 @@
 
     tinymce.init({
         selector: "#article",
-        plugins: [
-            'advlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons'
-        ]
+        language: 'pt_BR',
+        plugins: 
+                 'advlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons',
+        toolbar: 'undo redo  blocks fontfamily fontsize  bold italic underline strikethrough  link image media table mergetags align lineheight  tinycomments checklist numlist bullist indent outdent emoticons charmap removeformat',
     })
 
  </script>
