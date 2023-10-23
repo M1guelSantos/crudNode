@@ -18,6 +18,7 @@
         </thead>
         <tbody>
             <% articles.forEach(article => {%>
+                <tr>
                     <th><%= article.id %></td>
                     <td><%= article.title %></td>
                     <td><%= article.slug %></td>
@@ -40,6 +41,7 @@
 
                       </form>
                     </td>
+                </tr>
             <% }) %>       
              
         </tbody>

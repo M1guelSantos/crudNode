@@ -1,0 +1,18 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand ms-2" href="/">
+        GuiaPress
+    </a>
+
+    <ul class="navbar-nav me-auto">
+        <li class="nav-tem">
+            <a class="nav-link" href="/">Home</a>
+        </li>
+
+        <% categories.forEach(category => { %>
+            <li class="nav-tem">
+                <a class="nav-link" href="/"><%= category.title %></a>
+            </li>
+        <%})%>
+
+    </ul>
+</nav>
