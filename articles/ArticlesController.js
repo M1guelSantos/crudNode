@@ -22,13 +22,13 @@ router.get("/admin/articles/new", (req,res) =>{
 router.post("/articles/save", (req,res) => {
     var title = req.body.title
     var body = req.body.body
-    var categoria = req.body.category
+    var category = req.body.category
 
     Article.create({
         title: title,
         slug: slugify(title),
         body: body,
-        categoryId: categoria
+        categoryId: category
     }).then(() => {
         res.redirect("/admin/articles")
     })
@@ -56,5 +56,54 @@ router.post("/articles/delete", (req,res)=>{
     }
 })    
 
+router.get("/admin/articles/edit/:id", (req,res)=>{
+    var id = req.params.id
+    Article.findByPk(id).then(article => {
+        if(article != undefined){
+            Category.findAll().then(categories =>{
+                res.render("admin/articles/edit", {article: article, categories: categories})
+            })
+        }else{
+        res.redirect("/")    
+        }
+    }).catch(err =>{
+        res.redirect("/")
+    })
+})
+
+router.post("/articles/update", (req,res) => {
+    var id = req.body.id;
+    var title = req.body.title;
+    var body = req.body.body;
+    var category = req.body.category
+
+    Article.update({title: title, body: body, categoryId: category, slug:slugify(title)},{
+        where :{
+            id: id
+        }
+    }).then(() => {
+        res.redirect("/admin/articles")
+    }).catch(err =>{
+        res.redirect("/")
+    })
+})
+
+router.get("/articles/page/:num", (req,res) => {
+    var page = req.params.num
+    var offset = 0
+
+    if(isNaN(page) || 1){
+        offset = 0;
+    }else{
+        offset = parseInt(page) * 2;
+    }
+
+    Article.findAndCountAll({
+        limit: 2,
+        offset: offset // Retornar dados a partir de um valor
+    }).then(articles => {        
+        res.json(articles)
+    })
+})
 
 module.exports = router;
