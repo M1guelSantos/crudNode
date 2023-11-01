@@ -1,7 +1,8 @@
-const express = require("express")
+const express = require("express");
 const app = express ();
-const bodyParser = require("body-parser")
-const connection = require("./database/database")
+const bodyParser = require("body-parser");
+const session = require("express-session");
+const connection = require("./database/database");
 
 const categoriesController = require("./categories/CategoriesController")
 const articlesController = require("./articles/ArticlesController")
@@ -12,6 +13,11 @@ const usersController = require("./user/UsersController")
 const Article = require("./articles/Article");
 const Category = require("./categories/Category");
 const User = require("./user/User")
+
+// Sessions
+app.use(session({
+    secret: "literalmentequalquercoisa", cookie: {maxAge: 30000000}
+}))
 
 //view engine = ejs
 app.set('view engine', 'ejs')
@@ -36,6 +42,26 @@ app.use("/", categoriesController)
 app.use ("/", articlesController)
 app.use("/", usersController)
 
+app.get("/session", (req, res) => {
+    req.session.treinamento = "Formacao nodeJs"
+    req.session.ano = 2019
+    req.session.email = "miguel00@gmail.com"
+    req.session.user = {
+        username: "MiguelDoido",
+        email: "miguel00@gmail.com",
+        id: 10
+    }
+    res.send("Sessao Gerada")
+})
+
+app.get("/leitura", (req, res) => {
+    res.json({
+        treinamento: req.session.treinamento,
+        ano: req.session.ano,
+        email: req.session.email,
+        user: req.session.user
+    })
+})
 
 app.get ("/", (req,res) => {
 
