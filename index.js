@@ -29,6 +29,7 @@ app.use(bodyParser.json());
 
 //conctando bd
 
+
 connection
 .authenticate()
 .then(()=>{
